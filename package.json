@@ -1,0 +1,28 @@
+{
+  "name": "devops",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PedroCastro0507/DevOps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PedroCastro0507/DevOps/issues"
+  },
+  "homepage": "https://github.com/PedroCastro0507/DevOps#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-prom-bundle": "^8.0.0"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4"
+  }
+}
