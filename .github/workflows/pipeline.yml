@@ -1,0 +1,56 @@
+name: CI pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_CI:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Clonando o repositório
+        uses: actions/checkout@v2
+
+      - name: Configurando o Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Instalando dependências
+        run: npm ci
+        working-directory: src
+
+      - name: Iniciando API em segundo plano
+        run: |
+          nohup node app.js > /dev/null 2>&1 &
+        working-directory: src
+
+      - name: Aguardando API subir
+        run: sleep 3
+
+      - name: Testando /health
+        run: |
+          curl -s http://localhost:8000/health | grep '"status":"ok"'
+
+      - name: Testando /calc
+        run: |
+          RESULT=$(curl -s -X POST http://localhost:8000/calc \
+            -H "Content-Type: application/json" \
+            -d '{"a":5,"b":3,"op":"add"}')
+          if [ "$RESULT" != "8" ]; then
+            echo "ERRO: /calc não retornou o valor esperado!"
+            exit 1
+          fi
+
+      - name: Buildando a imagem Docker
+        run: docker build -t calculadora-local .
+        working-directory: src
+      
+      
+

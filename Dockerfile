@@ -4,7 +4,9 @@ WORKDIR /home/node
 
 COPY package*.json ./
 
-COPY . .
+RUN npm ci --only=production
+
+COPY src ./
 
 EXPOSE 8000
 
