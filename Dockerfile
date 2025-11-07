@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /home/node
 
-COPY package*.json ./
+COPY src/package*.json ./
 
 RUN npm ci --only=production
 
