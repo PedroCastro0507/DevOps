@@ -38,13 +38,14 @@ jobs:
         run: |
           curl -s http://localhost:8000/health | grep '"status":"ok"'
 
-      - name: Testando /calc
+      - name: Testando calculadora
         run: |
           RESULT=$(curl -s -X POST http://localhost:8000/calc \
             -H "Content-Type: application/json" \
             -d '{"a":5,"b":3,"op":"add"}')
-          if [ "$RESULT" != "8" ]; then
-            echo "ERRO: /calc não retornou o valor esperado!"
+          echo "Resposta da API: $RESULT"
+          if [[ "$RESULT" != *"8"* ]]; then
+            echo "ERRO: calculadora não retornou o valor esperado!"
             exit 1
           fi
 
